@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo</title>
+    <script>
+    window.onload = function() {    
+        var createLoginLayer = function() {
+            var div = document.createElement('div');
+            div.innerHTML = '<b>我是登录浮框</b>';
+            div.style.display = 'none';
+            document.body.appendChild(div);
+            return div;
+        }
+
+        var getSingle = function( fn ) {
+            var result;
+            return function() {
+                return result || (result = fn.apply(this, arguments));
+            }
+        }
+
+        var createSingleLoginLayer = getSingle( createLoginLayer );
+
+        document.getElementById('login').onclick = function() {
+            var loginLayer = createSingleLoginLayer();
+            loginLayer.style.display = 'block';
+        }
+    }    
+    </script>
+</head>
+<body>
+    <button id='login'>登录</button>
+</body>
+</html>
