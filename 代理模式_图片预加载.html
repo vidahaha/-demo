@@ -7,7 +7,30 @@
     <title>demo</title>
 <script>
 window.onload = function() {
-    
+    var myImage = (function(){
+        var imgNode = document.createElement( 'img' );
+        document.body.appendChild( imgNode );
+        return {
+            setSrc: function( src ) {
+                imgNode.src = src;
+            }
+        }
+    }());
+
+    var proxyImage = (function(){
+        var img = new Image();
+        img.onload = function() {
+            myImage.setSrc( this.src );
+        }
+        return {
+            setSrc: function( src ) {
+                myImage.setSrc('file:// /C:/Users/vidahaha/Desktop/零度/user.jpg');
+                img.src = src;
+            }
+        }
+    }());
+
+    proxyImage.setSrc('https://avatars0.githubusercontent.com/u/18280125?s=460&v=4');
 }    
 </script>
 </head>
