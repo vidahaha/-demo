@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo</title>
+<script>
+console.log(document.readyState)    
+window.onload = function() {
+    var throttle = function( fn, interval ) {
+        var timer,
+            firstTime = true;
+        return function() {
+            if( firstTime ) {
+                fn.apply(this, arguments);
+                return firstTime = false;
+            }    
+            if( timer ) return false;
+
+            timer = setTimeout(function() {
+                clearTimeout(timer);
+                timer = null;
+                fn.apply(this, arguments);
+            }, interval);
+        }    
+    };
+
+    var info = document.getElementById('info');
+    var infoText = info.innerText;
+    var i = 0;
+    window.onresize = throttle(function() {
+        info.innerText = infoText + i;
+        i++;
+    }, 500);
+}    
+</script>    
+</head>
+<body>
+    <h1 id="info">鼠标在这里移动！</h1>
+</body>
+</html>
