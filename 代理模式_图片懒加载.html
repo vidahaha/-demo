@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo</title>
+<script>
+window.onload = function() {
+    var imgNode = document.createElement( 'img' );
+    document.body.appendChild( imgNode );
+
+    var myImage = function( src ) {
+            imgNode.src = src
+    };
+
+    var proxyImage = (function(){
+
+        window.onmousewheel = function() {
+            var Y = imgNode.getBoundingClientRect().top;
+            console.log(Y);
+            if(Y <= window.innerHeight) {
+                myImage( 'https://avatars0.githubusercontent.com/u/18280125?s=460&v=4' );
+            }
+        };
+
+        return function() {
+            myImage('file:// /C:/Users/vidahaha/Desktop/零度/user.jpg');
+        }
+    }());
+
+    proxyImage();
+}
+</script>    
+</head>
+<body>
+    <div style="width:100%; height:1000px;"></div>
+</body>
+</html>  
+
