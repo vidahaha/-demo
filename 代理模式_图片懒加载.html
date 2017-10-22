@@ -8,6 +8,10 @@
 <script>
 window.onload = function() {
     var imgNode = document.createElement( 'img' );
+    imgNode.style = {
+        height: '200px',
+        width: '200px'
+    }
     document.body.appendChild( imgNode );
 
     var myImage = function( src ) {
@@ -16,10 +20,11 @@ window.onload = function() {
 
     var proxyImage = (function(){
 
-        window.onmousewheel = function() {
+        window.onscroll = function() {
             var Y = imgNode.getBoundingClientRect().top;
-            console.log(Y);
+            console.log(Y+' '+window.innerHeight);
             if(Y <= window.innerHeight) {
+                window.onscroll = null;
                 myImage( 'https://avatars0.githubusercontent.com/u/18280125?s=460&v=4' );
             }
         };
@@ -33,7 +38,7 @@ window.onload = function() {
 }
 </script>    
 </head>
-<body>
+<body style="margin:0;padding:0;">
     <div style="width:100%; height:1000px;"></div>
 </body>
 </html>  
