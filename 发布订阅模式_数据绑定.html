@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo</title>
+<script>
+window.onload = function() {
+    var button = document.getElementById('button');
+    var text = document.getElementById('text');
+    button.addEventListener('click', function(){
+        text.innerText = '';
+        for(var i = 0; i < 10; i++) {
+            var random = 19968+Math.floor((Math.random()*20901));
+            text.innerText += String.fromCharCode(random);
+        }
+        // 汉字范围：4E00-9FA5 19968-40869
+    });
+
+    var vm = new MVVM({
+        el: '#mvvm-app',
+        data: {
+            someStr: 'hello ',
+            className: 'btn',
+            htmlStr: '<span style="color: #f00;">red</span>',
+            child: {
+                someStr: 'World !'
+            }
+        }
+    });
+
+    var Observer = function( data ) {
+        this.data = data;
+        this.convert(data);
+    };
+
+    Observer.prototype = {
+        convert: function( data ) {
+            Object.keys(data).forEach(function(key, index) {
+                var val = data[key];
+                if( typeof val === 'Object' ) {
+                    observer(val);
+                }else {
+                    this.defineReactive(this.data, key, val);                   
+                }
+            });
+        },
+
+        defineReactive: function( data, key, val ) {
+            Object.defineProperty(data, key, {
+                enumerable: true,
+                configurable: false,
+                get: function() {
+                    return val;
+                },
+                set: function( newVal ) {
+                    if( val === newVal ) return;
+                    val = newVal;
+                    dep.tigger();
+                }
+            });
+        }
+    };
+
+    function observe( value ) {
+        return new Observer(value);
+    };
+
+    
+
+}
+</script>    
+</head>
+<body>
+    <div id="mvvm">
+        <input type="text" id="input">
+        <p id="text"></p>
+        <button id="button">click!</button>
+    </div>
+</body>
+</html>
