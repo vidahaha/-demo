@@ -77,10 +77,14 @@
         };
 
         var div = document.getElementsByTagName('div');
-        [].forEach.call(div, function(item, index){
-            var animate = new Animate( item );
-            animate.start('left', 1000, 1500, Object.keys(tween)[index]);
-        });
+        var animate = new Animate( div[0] );
+        animate.start('left', 1000, 10000, 'linear');
+        var animate1 = new Animate( div[1] );
+        animate1.start('right', 1000, 10000, 'linear');
+        // [].forEach.call(div, function(item, index){
+        //     var animate = new Animate( item );
+        //     animate.start('left', 1000, 1500, Object.keys(tween)[index]);
+        // });
         
     }    
     </script>        
